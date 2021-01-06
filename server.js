@@ -5,16 +5,16 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // HTTP to HTTPS automatic redirect
-// app.use((req, res, next) => {
-//   const reqProtocol = req.headers['x-forwarded-proto'];
+app.use((req, res, next) => {
+  const reqProtocol = req.headers['x-forwarded-proto'];
 
-//   if (reqProtocol === 'http') {
-//     res.redirect(`https://${req.headers.host}${req.url}`);
-//     res.end();
-//   } else {
-//     next();
-//   }
-// });
+  if (reqProtocol === 'http') {
+    res.redirect(`https://${req.headers.host}${req.url}`);
+    res.end();
+  } else {
+    next();
+  }
+});
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
